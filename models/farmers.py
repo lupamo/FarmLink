@@ -1,51 +1,76 @@
 #!/usr/bin/python
 import os
-from flask import Flask
 from datetime import datetime
 from dotenv import load_dotenv
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from sqlalchemy.orm import sessionmaker, scoped_session
+import urllib.parse
 
 load_dotenv()
 
-app = Flask(__name__)
 
 """configuring the database connection"""
+password = "kayla@2020"
+encoded_password = urllib.parse.quote_plus(password)
+DATABASE_URL = f"mysql+pymysql://farmlink_user:{encoded_password}@localhost:3306/fm_ln_0"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-"""to supress a warning"""
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+engine = create_engine(DATABASE_URL)
+Session = scoped_session(sessionmaker(bind=engine))
 
-"""initializing the SQLAlchemy object"""
-db = SQLAlchemy(app)
+"""Defining a base class"""
+Base = declarative_base()
 
-class Farmers(db.Model):
+
+class Farmers(Base):
 	"""farmers class creation"""
 
 	__tablename__ = 'farmers'
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(100), nullable=False)
-	contact = db.Column(db.String(20), unique=True, nullable=False)
-	address = db.Column(db.String(200), nullable=False)
-	created_at = db.Column(db.DateTime, default=datetime.utcnow)
-	updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-	def __init__(self, name, contact, address):
+	id = Column(Integer, primary_key=True)
+	name = Column(String(100), nullable=False)
+	contact = Column(Integer, unique=True, nullable=False)
+	location = Column(String(200), nullable=False)
+	created_at = Column(DateTime, default=datetime.utcnow)
+	updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+	def __init__(self, name, contact, location):
 		"""
 		farmers class attributes detail
 		"""
 		self.name = name
 		self.contact = contact
-		self.address = address
+		self.location = location
 	
 	def save(self):
-		db.session.add(self)
-		db.session.commit()
+		""""
+		Saving farmers info to the database
+		"""
+
+		session = Session()
+		session.add(self)
+		try:
+			session.commit()
+		except Exception as e:
+			session.rollback()
+			raise e
+		finally:
+			session.close()
 
 	def delete(self):
-		db.session.delete(self)
-		db.session.commit()
-
+		""""
+		Deleting farmers info to the database
+		"""
+		session = Session()
+		session.delete(self)
+		session.commit()
+		session.close()
+	
 	def __repr__(self):
 		return f"<farmer {self.name}>"
+	
+Base.metadata.create_all(engine)
 
+if __name__ == "__main__":
+	app.run()
 	
