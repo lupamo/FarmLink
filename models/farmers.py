@@ -6,6 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session
 import urllib.parse
+from flask import Flask
+ 
 
 load_dotenv()
 
@@ -20,6 +22,7 @@ Session = scoped_session(sessionmaker(bind=engine))
 
 """Defining a base class"""
 Base = declarative_base()
+app = Flask(__name__)
 
 
 class Farmers(Base):
