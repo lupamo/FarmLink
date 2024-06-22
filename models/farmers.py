@@ -1,12 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
+
 import os
 from datetime import datetime
 from dotenv import load_dotenv
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session
 import urllib.parse
-from flask import Flask
  
 
 load_dotenv()
@@ -22,7 +22,6 @@ Session = scoped_session(sessionmaker(bind=engine))
 
 """Defining a base class"""
 Base = declarative_base()
-app = Flask(__name__)
 
 
 class Farmers(Base):
@@ -70,10 +69,23 @@ class Farmers(Base):
 		session.close()
 	
 	def __repr__(self):
-		return f"<farmer {self.name}>"
+		return f"<Farmers (name={self.name}, contact={self.contact}, location={self.location})>"
 	
 Base.metadata.create_all(engine)
 
-if __name__ == "__main__":
-	app.run()
-	
+
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# add a new farmer
+#new_farmer = Farmers(name="Monica", contact="0701187654", location="Kiambu")
+#session.add(new_farmer)
+#session.commit()
+
+# Update a farmer's location
+#update_farmer = session.query(Farmers).filter_by(name="Monica").first()
+#update_farmer.location = "Makini"
+#session.commit()
+
+results = session.query(Farmers).all()
+print(results)
