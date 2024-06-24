@@ -78,9 +78,9 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # add a new farmer
-#new_farmer = Farmers(name="Monica", contact="0701187654", location="Kiambu")
-#session.add(new_farmer)
-#session.commit()
+new_farmer = Farmers(name="Monica", contact="0701187654", location="Kiambu")
+session.add(new_farmer)
+session.commit()
 
 # Update a farmer's location
 #update_farmer = session.query(Farmers).filter_by(name="Monica").first()
