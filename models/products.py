@@ -22,7 +22,7 @@ class Product(Base):
 	id = Column(Integer, primary_key=True)
 	name = Column(String(100), nullable=False)
 	price = Column(Integer, nullable=False)
-	owner = Column(Integer, ForeignKey("farmers.id"), nullable=False)
+	farmer = Column(Integer, ForeignKey("farmers.id"), nullable=False)
 	created_at = Column(DateTime, default=datetime.utcnow)
 	updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
