@@ -31,7 +31,7 @@ class Review(Base):
 	comment = Column(String(500), nullable=False)
 	rating = Column(Integer, nullable=False)
 	created_at = Column(DateTime, default=datetime.utcnow)
-	updated_at = Colimn(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+	updated_at = Colmn(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 	product = relationship('Product', back_populates='reviews')
 	farmer = relationship('Farmers', back_populates='reviews')
