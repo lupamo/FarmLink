@@ -3,22 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="styles/home.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}">
 	<title>Farmlink</title>
 </head>
 <body>
 	<header>
-		<h1>Farmlink</h1>
-		<ul id="Link-head">
-			<li id="head-links">Home</li>
-			<li id="head-links">Products</li>
-			<li id="head-links">About</li>
-			<li id="head-links">Account</li>			
+		<h1>Farm<span>link</span></h1>
+		<ul id="link-head">
+			<li id="head-links"><a href="#">Home</a></li>
+			<li id="head-links"><a href="#">Products</a></li>
+			<li id="head-links"><a href="#">About</a></li>
+			<li id="head-links"><a href="#">Account</a></li>			
 		</ul>
 	</header>
 	<section>
 		<div class="banner">
-			<img src="static/images/banner-img.jpg">
+			<img src="{{ url_for('static', filename='images/banner-img.jpg') }}" alt="Banner Image">
 			<h1>Connecting people to Fresh Farm products</h1>
 			<h2>Sign up</h2>
 	
