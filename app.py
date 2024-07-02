@@ -29,7 +29,7 @@ def get_db_connection():
 def home():
     return render_template('home.html')
 
-@app.route('/sign_in')
+@app.route('/sign-in')
 def sign_in():
     return render_template('sign_in.html')
 

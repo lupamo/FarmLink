@@ -3,13 +3,11 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: sans-serif;
-	width: 100%;
 	font-size: 16px;
 }
 header{
-	position: absolute;
 	top: 0;
-	display: flex;
+	display: flex; 
 	align-items: center;
 	justify-content: space-between;
 	padding: 20px;
@@ -25,3 +23,24 @@ h1 span{
 	color: rgb(10, 168, 37);
 	font-size: 40px;
 }
+section{
+	border: 1px solid black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
+.sign-in-form{
+	border: 1px solid blue;
+	width: 50%;
+	height: 25em;
+	display: grid;
+	align-items: center;
+	
+}
+form{
+	display: grid;
+	margin-bottom: 10px;
+	align-items: center;
+}
+
