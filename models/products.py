@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sqlalchemy import ForeignKey
-from farmers import Farmers, Base
+from models.farmers import Farmers, Base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
 from datetime import datetime
@@ -28,26 +28,26 @@ class Product(Base):
     
 
 	def __init__(self, name, price, owner):
-            self.name = name
-            self.price = price
-            self.owner = owner
-
+			self.name = name
+			self.price = price
+			self.owner = owner
+            
 	def save(self):
-            session = Session()
-            session.add(self)
-            try:
-                session.commit()
-            except Exception as e:
-                session.rollback()
-                raise e
-            finally:
-                session.close()
+			session = Session()
+			session.add(self)
+			try:
+				session.commit()
+			except Exception as e:
+				session.rollback()
+				raise e
+			finally:
+				session.close()
 
 	def delete(self):
-            session = Session()
-            session.delete(self)
-            session.commit()
-            session.close()
+		session = Session()
+		session.delete(self)
+		session.commit()
+		session.close()
 
 	def __repr__(self):
             return f"<Product {self.name} {self.price} {self.owner}>"

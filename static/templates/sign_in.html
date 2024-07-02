@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/sign-in.css') }}">
+	<title>Sign-in</title>
+</head>
+<body>
+	<header>
+		<h1>Farm<span>link</span></h1>
+	</header>
+	<section>
+		<div class="sign-in-form">
+			<form action="{{ url_for('login') }}" method="get">
+				<label for="user_type">Sign Up as:</label>
+				<select name="user_type" id="user_type">
+					<option value="customer">Customer</option>
+					<option value="farmer">Farmer</option>
+				</select>
+			</form>
+			<button value="farmer">Go to login</button>
+	</section>
+</body>
+</html>

@@ -12,15 +12,14 @@
 		<ul id="link-head">
 			<li id="head-links"><a href="#">Home</a></li>
 			<li id="head-links"><a href="#">Products</a></li>
-			<li id="head-links"><a href="#">About</a></li>
-			<li id="head-links"><a href="#">Account</a></li>			
+			<li id="head-links"><a href="{{ url_for('sign_in') }}">Sign Up</a></li>
+			<li id="head-links"><a href="{{ url_for('login') }}">Login</a></li>			
 		</ul>
 	</header>
 	<section>
 		<div class="banner">
 			<img src="{{ url_for('static', filename='images/banner-img.jpg') }}" alt="Banner Image">
 			<h1>Connecting people to Fresh Farm products</h1>
-			<h2>Sign up</h2>
 	
 		</div>
 	</section>

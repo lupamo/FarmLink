@@ -33,9 +33,11 @@ ul{
 }
 #link-head{
 	align-items: center;
+	cursor: pointer;
 }
 li{
 	list-style: none;
+
 }
 li a{
 	text-decoration: none;
@@ -91,4 +93,8 @@ section{
 }
 .banner h2:hover{
 	background-color: rgb(6, 180, 6);
+}
+.banner h2 a{
+	text-decoration: none;
+	color: white;
 }
