@@ -32,6 +32,18 @@ def home():
 @app.route('/sign_in')
 def sign_in():
     return render_template('sign_in.html')
+@app.route('/products', methods=['GET'])
+def get_products():
+    products = session.query(Product).all()
+    result = []
+    for product in products:
+        product_info = {
+            'name': product.name,
+            'price': product.price,
+            'owner': product.owner
+        }
+        result.append(product_info)
+    return render_template(products.html)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -44,7 +56,7 @@ def login():
             user = Customers.query.filter_by(contact=contact, name=name).first()
         elif user_type == 'farmer':
             user = Farmers.query.filter_by(contact=contact, name=name).first()
-        
+
         if user:
             return redirect(url_for('dashboard', user_type=user_type))
         else:
@@ -62,6 +74,6 @@ def dashboard():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  
+        db.create_all()
     app.run(debug=True)
 
