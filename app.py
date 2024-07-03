@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import mysql.connector
 from models.farmers import Farmers
 from models.customers import Customers
+from models.products import Product
 import urllib.parse
 
 
@@ -34,7 +35,7 @@ def sign_in():
     return render_template('sign_in.html')
 @app.route('/products', methods=['GET'])
 def get_products():
-    products = session.query(Product).all()
+    products = Product.query.all()
     result = []
     for product in products:
         product_info = {
@@ -43,7 +44,7 @@ def get_products():
             'owner': product.owner
         }
         result.append(product_info)
-    return render_template(products.html)
+    return render_template('products.html', products=result)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

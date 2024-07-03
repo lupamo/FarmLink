@@ -14,22 +14,14 @@
 		<section class="products">
 			<h2> Available Products</h2>
 			<div class="product-list">
+				{% for product in products %}
 				<div class="product">
-					<img src="{{ url_for('static', filename='images/tomatoes.PNG') }}" alt="Tomatoes">
-					<h3> Tomatoes</h3>
-					<p>Price: $2/kg</p>
+					<img src="{{ url_for('static', filename='images/' + product.name.lower() + '.PNG') }}" alt="{{product.name}}">
+					<h3>{{ product.name }}</h3>
+					<p>price: ${{ product.price }}</p>
+					<p>owner: {{ product.owner }}</p>
 				</div>
-				<div class="product">
-					<img src="{{ url_for('static', filename='images/veges.PNG') }}" alt="Vegetables">
-					<h3> Vegetables</h3>
-					<p>Price: $2/kg</p>
-				</div>
-				<div class="product">
-					<img src="{{ url_for('static', filename='images/melon.PNG') }}" alt="Watermelon">
-					<h3> Watermelon</h3>
-					<p>Price: $3/kg</p>
-				</div>
-
+				{% endfor %}
 			</div>
 		</section>
 	</main>

@@ -59,11 +59,12 @@ session = Session()
 
 # add a new product
 
-product1 = Product(name= "Tomatoes", price=100, owner=2)
-product2 = Product(name= "Vegetables", price=200, owner=2)
-product3 = Product(name= "Watermelon", price=300, owner=2)
+# product1 = Product(name= "Tomatoes", price=100, owner=2)
+# product2 = Product(name= "Vegetables", price=200, owner=2)
+# product3 = Product(name= "Watermelon", price=300, owner=2)
 
-session.add(product1)
-session.add(product2)
-session.add(product3)
-session.commit()
+# session.add(product1)
+# session.add(product2)
+# session.add(product3)
+# session.commit()
+# session.close()
