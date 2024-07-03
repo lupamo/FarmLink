@@ -12,7 +12,7 @@
 	</header>
 	<section>
 		<div class="sign-in-form">
-			<form action="{{ url_for('login') }}" method="get">
+			<form action="{{ url_for('login') }}" method="posts">
 				<label for="user_type">Sign Up as:</label>
 				<select name="user_type" id="user_type">
 					<option value="customer">Customer</option>
@@ -24,3 +24,4 @@
 	</section>
 </body>
 </html>
+
