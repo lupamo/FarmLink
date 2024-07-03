@@ -24,10 +24,10 @@ class Customers(Base):
 	id = Column(Integer, primary_key=True)
 	name = Column(String(100), nullable=False)
 	contact = Column(Integer, nullable=False)
-	address = Column(String, nullable=False)
+	address = Column(String(255), nullable=False)
 	created_at = Column(DateTime, default=datetime.utcnow)
 	updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-	
+
 	def __init__(self, name, contact, address):
 		self.name = name
 		self.contact = contact
@@ -58,11 +58,11 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# add a new customer
-#customer1 = Customers(name="Loice Wamse", contact="0754083545", address="Nairobi")
-#customer2 = Customers(name="Harri Maina", contact="0702345765", address="Nairobi")
-#session.add(customer1)
-#session.add(customer2)
-#session.commit()
+#add a new customer
+customer1 = Customers(name="Loice Wamse", contact="0754083545", address="Nairobi")
+customer2 = Customers(name="Harri Maina", contact="0702345765", address="Nairobi")
+session.add(customer1)
+session.add(customer2)
+session.commit()
 results = session.query(Customers).all()
 print(results)

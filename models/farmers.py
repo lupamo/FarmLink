@@ -7,7 +7,7 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session
 import urllib.parse
- 
+
 
 load_dotenv()
 
@@ -36,14 +36,14 @@ class Farmers(Base):
 	created_at = Column(DateTime, default=datetime.utcnow)
 	updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-	def __init__(self, name, contact, location):
+	def __init__( self, name, contact, location):
 		"""
 		farmers class attributes detail
 		"""
 		self.name = name
 		self.contact = contact
 		self.location = location
-	
+
 	def save(self):
 		""""
 		Saving farmers info to the database
@@ -67,10 +67,10 @@ class Farmers(Base):
 		session.delete(self)
 		session.commit()
 		session.close()
-	
+
 	def __repr__(self):
 		return f"<Farmers (name={self.name}, contact={self.contact}, location={self.location})>"
-	
+
 Base.metadata.create_all(engine)
 
 
@@ -79,7 +79,9 @@ session = Session()
 
 # add a new farmer
 #new_farmer = Farmers(name="Monica", contact="0701187654", location="Kiambu")
+#farmer1 = Farmers(name="Paul", contact="071756438", location="Isiolo")
 #session.add(new_farmer)
+#session.add(farmer1)
 #session.commit()
 
 # Update a farmer's location
