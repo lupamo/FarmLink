@@ -2,9 +2,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session, joinedload
 from models.customers import Customers
-from models.products import Product
+from models.products import Product  # Import your Product model
 import mysql.connector
 import urllib.parse
 
@@ -44,21 +44,22 @@ def sign_up():
         address = request.form['address']
         
         new_customer = Customers(name=name, contact=contact, address=address)
-        new_customer.save()
+        db.session.add(new_customer)
+        db.session.commit()
         
         return redirect(url_for('login'))
     return render_template('sign_up.html')
 
 @app.route('/products', methods=['GET'])
 def get_products():
-    from models.products import Product
-    products = Session.query(Product).all()
+    products = db.session.query(Product).options(joinedload('farmer')).all()
+
     result = []
     for product in products:
         product_info = {
             'name': product.name,
             'price': product.price,
-            'farmer': product.farmer_id
+            'farmer': product.farmer.name  # Access farmer's name directly from the loaded object
         }
         result.append(product_info)
     return render_template("products.html", products=result)
@@ -70,10 +71,8 @@ def login():
         name = request.form['name']
         user_type = request.form['user_type']
 
-        session = Session()
         if user_type == 'customer':
-            user = session.query(Customers).filter_by(contact=contact, name=name).first()
-        session.close()
+            user = db.session.query(Customers).filter_by(contact=contact, name=name).first()
 
         if user:
             return redirect(url_for('dashboard', user_type=user_type))
@@ -84,12 +83,9 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     user_type = request.args.get('user_type')
-    session = Session()
     if user_type == 'customer':
-        products = session.query(Product).all()
-        session.close()
+        products = db.session.query(Product).all()
         return render_template('products.html', products=products)
-    session.close()
     return 'Welcome'
 
 if __name__ == '__main__':
