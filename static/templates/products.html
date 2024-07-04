@@ -13,23 +13,17 @@
 	<main>
 		<section class="products">
 			<h2> Available Products</h2>
-			<div class="product-list">
-				<div class="product">
-					<img src="{{ url_for('static', filename='images/tomatoes.PNG') }}" alt="Tomatoes">
-					<h3> Tomatoes</h3>
-					<p>Price: $2/kg</p>
-				</div>
-				<div class="product">
-					<img src="{{ url_for('static', filename='images/veges.PNG') }}" alt="Vegetables">
-					<h3> Vegetables</h3>
-					<p>Price: $2/kg</p>
-				</div>
-				<div class="product">
-					<img src="{{ url_for('static', filename='images/melon.PNG') }}" alt="Watermelon">
-					<h3> Watermelon</h3>
-					<p>Price: $3/kg</p>
-				</div>
-
+			<ul>
+				{% for product in products %}
+					<li>
+						<h2>{{ product['name'] }}</h2>
+						<p>Price: ${{ product['price'] }}</p>
+						<p>Owner: {{ product['owner'] }}</p>
+					</li>
+				{% else %}
+					<li>No products available</li>
+				{% endfor %}
+			</ul>
 			</div>
 		</section>
 	</main>

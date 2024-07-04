@@ -7,6 +7,7 @@ import mysql.connector
 from models.farmers import Farmers
 from models.customers import Customers
 from models.products import Product
+from models.products import Product
 import urllib.parse
 
 
@@ -52,7 +53,7 @@ def get_products():
             'farmer': product.farmer
         }
         result.append(product_info)
-    return render_template("products.html")
+    return render_template("products.html", products=result)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
