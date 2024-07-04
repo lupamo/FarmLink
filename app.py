@@ -1,19 +1,12 @@
-#!/usr//bin/python3
+#!/usr/bin/python3
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 import mysql.connector
-from models.farmers import Farmers
-from models.customers import Customers
-from models.products import Product
-from models.products import Product
 import urllib.parse
 
-
-
 app = Flask(__name__, template_folder='static/templates')
-# Add this line to your app initialization
 
 password = "kayla@2020"
 encoded_password = urllib.parse.quote_plus(password)
@@ -23,7 +16,6 @@ db = SQLAlchemy(app)
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 Session = scoped_session(sessionmaker(bind=engine))
-
 
 def get_db_connection():
     connection = mysql.connector.connect(
@@ -44,19 +36,22 @@ def sign_in():
 
 @app.route('/products', methods=['GET'])
 def get_products():
+    from models.products import Product
     products = Session.query(Product).all()
     result = []
     for product in products:
         product_info = {
             'name': product.name,
             'price': product.price,
-            'farmer': product.farmer
+            'farmer': product.farmer_id
         }
         result.append(product_info)
     return render_template("products.html", products=result)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    from models.farmers import Farmers
+    from models.customers import Customers
     if request.method == 'POST':
         contact = request.form['contact']
         name = request.form['name']
@@ -86,4 +81,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
