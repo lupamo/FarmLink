@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sqlalchemy import ForeignKey
-from farmers import Farmers, Base
+from models.farmers import Farmers, Base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
 from datetime import datetime
@@ -22,15 +22,17 @@ class Product(Base):
 	id = Column(Integer, primary_key=True)
 	name = Column(String(100), nullable=False)
 	price = Column(Integer, nullable=False)
-	owner = Column(Integer, ForeignKey("farmers.id"), nullable=False)
+	quantity = Column(Integer, nullable=False)
+	farmer = Column(Integer, ForeignKey("farmers.id"), nullable=False)
 	created_at = Column(DateTime, default=datetime.utcnow)
 	updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-	def __init__(self, name, price, owner):
+	def __init__(self, name, price, quantity, farmer):
 			self.name = name
 			self.price = price
-			self.owner = owner
+			self.quantity = quantity
+			self.farmer = farmer
 
 	def save(self):
 			session = Session()
@@ -50,7 +52,7 @@ class Product(Base):
 		session.close()
 
 	def __repr__(self):
-            return f"<Product {self.name} {self.price} {self.owner}>"
+            return f"<Product {self.name} {self.price} {self.quantity} {self.farmer}>"
 
 Base.metadata.create_all(engine)
 
@@ -59,9 +61,9 @@ session = Session()
 
 # add a new product
 
-product1 = Product(name= "Tomatoes", price=100, owner=2)
-product2 = Product(name= "Vegetables", price=200, owner=2)
-product3 = Product(name= "Watermelon", price=300, owner=2)
+product1 = Product(name= "Tomatoes", price=100, quantity=4, farmer=2)
+product2 = Product(name= "Vegetables", price=200, quantity=6, farmer=2)
+product3 = Product(name= "Watermelon", price=300, quantity=2, farmer=2)
 
 session.add(product1)
 session.add(product2)

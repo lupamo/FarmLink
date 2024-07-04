@@ -10,19 +10,19 @@
 	<header>
 		<h1>Farm<span>link</span></h1>
 		<ul id="link-head">
-			<li id="head-links"><a href="home.html">Home</a></li>
-			<li id="head-links"><a href="products.html">Products</a></li>
+			<li id="head-links"><a href="#">Home</a></li>
+			<li id="head-links"><a href="{{ url_for('get_products') }}">Products</a></li>
 			<li id="head-links"><a href="{{ url_for('sign_in') }}">Sign Up</a></li>
-			<li id="head-links"><a href="{{ url_for('login') }}">Login</a></li>
+			<li id="head-links"><a href="{{ url_for('login') }}">Login</a></li>			
 		</ul>
 	</header>
 	<section>
 		<div class="banner">
 			<img src="{{ url_for('static', filename='images/banner-img.jpg') }}" alt="Banner Image">
 			<h1>Connecting people to Fresh Farm products</h1>
-
+	
 		</div>
 	</section>
-
+	
 </body>
 </html>
