@@ -1,46 +1,83 @@
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: sans-serif;
-	font-size: 16px;
-}
-header{
-	top: 0;
-	display: flex; 
-	align-items: center;
-	justify-content: space-between;
-	padding: 20px;
-	background-color: rgb(218, 226, 233);
-
-}
-h1{
-	font-size: 40px;
-	font-weight: 500;
-		
-}
-h1 span{
-	color: rgb(10, 168, 37);
-	font-size: 40px;
-}
-section{
-	border: 1px solid black;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	
-}
-.sign-in-form{
-	border: 1px solid blue;
-	width: 50%;
-	height: 25em;
-	display: grid;
-	align-items: center;
-	
-}
-form{
-	display: grid;
-	margin-bottom: 10px;
-	align-items: center;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
+body {
+    background-color: #f0f0f0;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: 100vh;
+    grid-template-rows: auto 1fr; 
+}
+
+header {
+    text-align: center;
+    margin-bottom: 10px; 
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+header h1 span {
+    color: green;
+}
+
+section {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0; /* Remove any extra margin */
+}
+
+.sign-in-form {
+    display: grid;
+    flex-direction: column;
+    height: 200px;
+}
+
+.form-group {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group select,
+.form-group button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.form-group button {
+    background-color: green;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-group button:hover {
+    background-color: darkgreen;
+}
+
+@media (max-width: 600px) {
+    section {
+        width: 90%;
+    }
+}
