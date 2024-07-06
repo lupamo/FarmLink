@@ -12,11 +12,11 @@
 	</header>
 	<main>
 		<section class="products">
-			<h2> Available Products</h2>
-			<ul>
+			<h2 class="title"> Available Products</h2>
+			<ul  class="product-list">
 				{% for product in products %}
-					<li>
-						<h2>{{ product['name'] }}</h2>
+					<li class="product-item">
+						<h3>{{ product['name'] }}</h2>
 						<p>Price: ${{ product['price'] }}</p>
 						<p>Owner: {{ product['farmer'] }}</p>
 					</li>

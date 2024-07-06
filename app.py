@@ -52,7 +52,9 @@ def sign_up():
 
 @app.route('/products', methods=['GET'])
 def get_products():
-    products = db.session.query(Product).options(joinedload('farmer')).all()
+    from models.products import Product
+    session = Session()
+    products = session.query(Product).options(joinedload(Product.farmer)).all()
 
     result = []
     for product in products:

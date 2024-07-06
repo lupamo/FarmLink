@@ -12,7 +12,7 @@ header{
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 20px;
+	padding: 15px;
 	background-color: rgb(218, 226, 233);
 	z-index: 10;
 
@@ -38,6 +38,7 @@ ul{
 }
 li{
 	list-style: none;
+	margin-right: 15px;
 
 }
 li a{
@@ -46,10 +47,13 @@ li a{
 }
 #head-links a:hover{
 	color: rgb(10, 168, 37);
+	border-bottom: 2px solid rgb(10, 168, 37);
+	transition: 0.5s ease;
 }
 section{
 	width: 100%;
-	height: 100vh;
+	margin-top: 70px;
+	position: fixed;
 
 }
 .banner{
