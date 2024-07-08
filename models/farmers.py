@@ -8,6 +8,8 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session
 import urllib.parse
 from .base import Base
+from models.products import Product
+
 
 load_dotenv()
 
@@ -28,18 +30,18 @@ class Farmers(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     contact = Column(Integer, unique=True, nullable=False)
-    location = Column(String(200), nullable=False)
+    address = Column(String(200), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationship to products
     products = relationship("Product", back_populates="farmer")
 
-    def __init__(self, name, contact, location):
+    def __init__(self, name, contact, address):
         self.name = name
         self.contact = contact
-        self.location = location
-
+        self.address = address
+    
     def save(self):
         """Saving farmers info to the database"""
         session = Session()
@@ -60,7 +62,7 @@ class Farmers(Base):
         session.close()
 
     def __repr__(self):
-        return f"<Farmers (name={self.name}, contact={self.contact}, location={self.location})>"
+        return f"<Farmers (name={self.name}, contact={self.contact}, address={self.address})>"
 
 Base.metadata.create_all(engine)
 

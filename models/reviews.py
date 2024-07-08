@@ -71,8 +71,8 @@ if __name__ == "__main__":
 	app.run()
 
 	# Create a new review and save it to the database
-	review1 = Review(product_id=1, farmer_id=1, review_text="Great product!", rating=5)
-	review1.save()
+	#review1 = Review(product_id=1, farmer_id=1, review_text="Great product!", rating=5)
+	#review1.save()
 
 	# Query all review
 	session = Session()

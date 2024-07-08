@@ -1,14 +1,16 @@
 #!/usr/bin/python3
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session, joinedload
 from models.customers import Customers
-from models.products import Product  # Import your Product model
+from models.farmers import Farmers
+from models.products import Product
 import mysql.connector
 import urllib.parse
 
 app = Flask(__name__, template_folder='static/templates')
+app.secret_key = 'supersecretkey'
 
 password = "kayla@2020"
 encoded_password = urllib.parse.quote_plus(password)
@@ -36,19 +38,41 @@ def home():
 def sign_in():
     return render_template('sign_in.html')
 
-@app.route('/sign_up', methods=['GET', 'POST'])
-def sign_up():
-    if request.method == 'POST':
-        name = request.form['name']
-        contact = request.form['contact']
-        address = request.form['address']
-        
-        new_customer = Customers(name=name, contact=contact, address=address)
-        db.session.add(new_customer)
-        db.session.commit()
-        
-        return redirect(url_for('login'))
-    return render_template('sign_up.html')
+@app.route('/sign_up_or_login', methods=['POST'])
+def sign_up_or_login():
+    user_type = request.form['user_type']
+    name = request.form['name']
+    contact = request.form['contact']
+    address = request.form.get('address')  # Address is required for sign-up
+
+    user = None
+
+    if user_type == 'customer':
+        user = db.session.query(Customers).filter_by(name=name, contact=contact).first()
+        if not user:
+            # Sign up new customer
+            new_customer = Customers(name=name, contact=contact, address=address)
+            db.session.add(new_customer)
+            db.session.commit()
+            return redirect(url_for('login'))
+
+    elif user_type == 'farmer':
+        user = db.session.query(Farmers).filter_by(name=name, contact=contact).first()
+        if not user:
+            # Sign up new farmer
+            new_farmer = Farmers(name=name, contact=contact, address=address)
+            db.session.add(new_farmer)
+            db.session.commit()
+            return redirect(url_for('login'))
+
+    if user:
+        # Successful login
+        session['user_id'] = user.id
+        session['user_type'] = user_type
+        return redirect(url_for('dashboard', user_type=user_type))
+    else:
+        # Login failed
+        return "Invalid login credentials"
 
 @app.route('/products', methods=['GET'])
 def get_products():
@@ -61,7 +85,8 @@ def get_products():
         product_info = {
             'name': product.name,
             'price': product.price,
-            'farmer': product.farmer.name  # Access farmer's name directly from the loaded object
+            'farmer': product.farmer.name if product.farmer else '', # Access farmer's name directly from the loaded object
+            'contact': product.farmer.contact if product.farmer else '' # Access farmer's contact directly from the loaded object
         }
         result.append(product_info)
     return render_template("products.html", products=result)
@@ -69,25 +94,98 @@ def get_products():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        contact = request.form['contact']
-        name = request.form['name']
         user_type = request.form['user_type']
+        name = request.form['name']
+        contact = request.form['contact']
+
+        user = None  # Initialize user variable
 
         if user_type == 'customer':
-            user = db.session.query(Customers).filter_by(contact=contact, name=name).first()
+            user = db.session.query(Customers).filter_by(name=name, contact=contact).first()
+        elif user_type == 'farmer':
+            user = db.session.query(Farmers).filter_by(name=name, contact=contact).first()
 
         if user:
+            # Successful login
+            session['user_id'] = user.id
+            session['user_type'] = user_type
             return redirect(url_for('dashboard', user_type=user_type))
         else:
-            return 'Invalid credentials'
+            # Login failed
+            return "Invalid login credentials"
     return render_template('login.html')
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/add_product', methods=['GET', 'POST'])
+def add_product():
+    if 'user_id' not in session or session.get('user_type') != 'farmer':
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        # Get form data
+        name = request.form['name']
+        description = request.form['description']
+        price = int(request.form['price'])
+        quantity = int(request.form['quantity'])
+        farmer_id = int(request.form['farmer_id'])  # Assuming you get this from session or form
+
+        # Check if a file was uploaded
+        image_file = request.files.get('image')
+        if image_file and allowed_file(image_file.filename):
+            filename = secure_filename(image_file.filename)
+            image_path = os.path.join('path/to/save/images/', filename)
+            
+            # Save the file to the server
+            image_file.save(image_path)
+            
+            # Optionally, store the image path in the database
+            # new_product.image_path = image_path
+            
+            """Create a new product object"""
+            new_product = Product(name=name, description=description, price=price,
+                                  quantity=quantity, farmer_id=farmer_id, image_path=image_path)
+
+            """Save the product to the database"""
+            try:
+                new_product.save()
+                return redirect(url_for('dashboard'))
+            except Exception as e:
+                """Handle any errors (e.g., validation errors)"""
+                return render_template('error.html', error=str(e))
+        else:
+            flash('Invalid file type')
+            return redirect(request.url)
+
+    """If GET request, render the form to add a product"""
+    current_user = db.session.query(Farmers).get(session['user_id'])
+    return render_template('add_product.html', current_user=current_user)
+
 
 @app.route('/dashboard')
 def dashboard():
     user_type = request.args.get('user_type')
     if user_type == 'customer':
         products = db.session.query(Product).all()
+        product_list = []
+        for product in products:
+            product_info = {
+                'name': product.name,
+                'price': product.price,
+                'farmer': {
+                    'name': product.farmer.name,
+                    'contact': product.farmer.contact,
+                    'address': product.farmer.address
+                }
+            }
+            product_list.append(product_info)
         return render_template('products.html', products=products)
+    elif user_type == 'farmer':
+        return redirect(url_for('add_product'))
+
     return 'Welcome'
 
 if __name__ == '__main__':

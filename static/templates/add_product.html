@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/add_product.css') }}">
+    <title>product_add</title>
+</head>
+<body>
+    <header>
+        <h1>Farm<span>link</span></h1>
+    </header>
+    <section>
+        <div class="product_add">
+            <h1>Add a New Product</h1>
+			<form method="post" action="{{ url_for('add_product') }}">
+				<label for="name">Product Name:</label>
+				<input type="text" id="name" name="name" required><br>
+
+				<label for="description">Description:</label>
+				<input type="text" id="description" name="description" required><br>
+
+				<label for="price">Price:</label>
+				<input type="number" id="price" name="price" required><br>
+
+				<label for="quantity">Quantity:</label>
+				<input type="number" id="quantity" name="quantity" required><br>
+
+				<input type="hidden" name="farmer_id" value="{{ current_user.id }}">
+
+				<label for="image">Product Image:</label>
+                <input type="file" id="image" name="image" accept="image/*"><br>
+
+				<button type="submit">Add Product</button>
+			</form> 
+	    </div>
+    </section>
+</body>
+</html>
