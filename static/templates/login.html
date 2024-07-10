@@ -7,21 +7,27 @@
     <title>Login</title>
 </head>
 <body>
-    <h2>Login</h2>
-    <form action="{{ url_for('login') }}" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="contact">Contact:</label>
-        <input type="text" id="contact" name="contact" required>
-        <br>
-        <label for="user_type">User Type:</label>
-        <select id="user_type" name="user_type">
-            <option value="customer">Customer</option>
-            <option value="farmer">Farmer</option>
-        </select>
-        <br>
-        <button type="submit">Login</button>
-    </form>
+    <header>
+		<h1>Farm<span>link</span></h1>
+	</header>
+    <section>
+        <h2>Login</h2>
+        
+        <form action="{{ url_for('login') }}" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" required>
+            <br>
+            <label for="user_type">User Type:</label>
+            <select id="user_type" name="user_type">
+                <option value="customer">Customer</option>
+                <option value="farmer">Farmer</option>
+            </select>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+    </section>
 </body>
 </html>

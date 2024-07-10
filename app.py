@@ -88,6 +88,7 @@ def get_products():
         product_info = {
             'name': product.name,
             'price': product.price,
+            'quantity': product.quantity,
             'farmer': product.farmer.name if product.farmer else '', # Access farmer's name directly from the loaded object
             'contact': product.farmer.contact if product.farmer else '' # Access farmer's contact directly from the loaded object
         }
@@ -109,7 +110,7 @@ def login():
             user = db.session.query(Farmers).filter_by(name=name, contact=contact).first()
 
         if user:
-            # Successful login
+            """Successful login"""
             session['user_id'] = user.id
             session['user_type'] = user_type
             return redirect(url_for('dashboard', user_type=user_type))

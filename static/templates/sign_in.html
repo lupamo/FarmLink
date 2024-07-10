@@ -11,9 +11,10 @@
         <h1>Farm<span>link</span></h1>
     </header>
     <section>
+        <h2>Sign-Up</h2>
         <div class="sign-in-form">
             <form action="{{ url_for('sign_up_or_login') }}" method="post">
-                <label for="user_type">Sign Up/Login as:</label>
+                <label for="user_type" id="signin">Sign as:</label>
                 <select name="user_type" id="user_type" required>
                     <option value="customer">Customer</option>
                     <option value="farmer">Farmer</option>

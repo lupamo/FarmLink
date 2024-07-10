@@ -2,4 +2,74 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: sans-serif;
+	font-size: 16px;
+}
+header{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 15px;
+	background-color: rgb(218, 226, 233);
+}
+h1{
+	font-size: 40px;
+	font-weight: 500;
+		
+}
+h1 span{
+	color: rgb(10, 168, 37);
+	font-size: 40px;
+}
+section{
+	width: 100%;
+	margin-top: 15%;
+	text-align: center;
+	height: 350px;
+}
+section h2{
+	margin-top: 20px;
+	font-family: 'Garamond', 'Georgia', serif;
+	color: rgb(46, 46, 46);
+	font-size: 40px;
+	font-weight: 700;
+}
+form{
+	margin-top: 10px;
+}
+input{
+	width: 300px;
+	height: 40px;
+	border: 1px solid rgb(10, 168, 37);
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 10px;
+}
+label{
+	font-size: 20px;
+	font-weight: 500;
+}
+select{
+	width: 300px;
+	height: 40px;
+	border: 1px solid rgb(10, 168, 37);
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 10px;
+}
+button{
+	width: 300px;
+	height: 40px;
+	border: 1px solid rgb(10, 168, 37);
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 10px;
+	background-color: rgb(10, 168, 37);
+	color: white;
+	font-size: 20px;
+	font-weight: 500;
+	cursor: pointer;
 }

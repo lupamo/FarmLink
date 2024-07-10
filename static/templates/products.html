@@ -8,7 +8,7 @@
 </head>
 <body>
 	<header>
-		<h1>Farm<span>link</span></h1>
+		<h1><a href="{{ url_for('home') }}">Farm<span>link</span></a></h1>
 	</header>
 	<main>
 		<section class="products">
@@ -17,7 +17,8 @@
 				{% for product in products %}
 					<li class="product-item">
 						<h3>{{ product['name'] }}</h2>
-						<p>Price: ${{ product['price'] }}</p>
+						<p>Price: ksh:{{ product['price'] }} per kg</p>
+						<p>quantity Available:{{ product['quantity'] }} Kgs</p>
 						<p>Farmer: {{ product['farmer']['name'] }}</p>
 						<p>Contact: {{ product['farmer']['contact'] }}</p>
 						<p>address: {{ product['farmer']['address'] }}</p>
