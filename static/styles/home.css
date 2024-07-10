@@ -158,18 +158,19 @@ ul.lable{
 }
 
 .mission h1{
+	display: inline-block;
+	width: 100%;
 	font-family: 'Garamond', 'Georgia', serif;
 	font-weight: 600;
 	border-bottom: 2px solid rgb(10, 168, 37);
-	display: inline-block;
 	padding: 10px;
 }
 
-.mission p{
+#mission-text{
 	font-size: 20px;
-	width: 100%;
+	width: 60%;
+	display: inline-block;
 	text-align: center;
 	margin-top: 20px;
 	font-family: 'Garamond', 'Georgia', serif;
-	border: 1px solid red;
 }
