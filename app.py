@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session, joinedload
 from models.customers import Customers
@@ -16,6 +18,7 @@ password = "kayla@2020"
 encoded_password = urllib.parse.quote_plus(password)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://farmlink_user:{encoded_password}@localhost:3306/fm_ln_0"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = '/uploads' 
 db = SQLAlchemy(app)
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
@@ -126,41 +129,32 @@ def add_product():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        # Get form data
         name = request.form['name']
-        description = request.form['description']
+        Description = request.form['Description']
         price = int(request.form['price'])
         quantity = int(request.form['quantity'])
-        farmer_id = int(request.form['farmer_id'])  # Assuming you get this from session or form
+        farmer_id = session['user_id']  # Using session to get farmer_id
 
-        # Check if a file was uploaded
         image_file = request.files.get('image')
         if image_file and allowed_file(image_file.filename):
             filename = secure_filename(image_file.filename)
-            image_path = os.path.join('path/to/save/images/', filename)
-            
-            # Save the file to the server
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            print(f"Saving image to: {image_path}")
             image_file.save(image_path)
-            
-            # Optionally, store the image path in the database
-            # new_product.image_path = image_path
-            
-            """Create a new product object"""
-            new_product = Product(name=name, description=description, price=price,
-                                  quantity=quantity, farmer_id=farmer_id, image_path=image_path)
-
-            """Save the product to the database"""
-            try:
-                new_product.save()
-                return redirect(url_for('dashboard'))
-            except Exception as e:
-                """Handle any errors (e.g., validation errors)"""
-                return render_template('error.html', error=str(e))
         else:
-            flash('Invalid file type')
-            return redirect(request.url)
+            image_path = None
 
-    """If GET request, render the form to add a product"""
+        new_product = Product(name=name, Description=Description, price=price,
+                              quantity=quantity, farmer_id=farmer_id, image=image_path)
+
+        try:
+            db.session.add(new_product)
+            db.session.commit()
+            return redirect(url_for('dashboard', user_type='farmer'))
+        except Exception as e:
+            db.session.rollback()
+            return render_template('error.html', error=str(e))
+
     current_user = db.session.query(Farmers).get(session['user_id'])
     return render_template('add_product.html', current_user=current_user)
 

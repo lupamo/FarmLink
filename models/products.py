@@ -25,6 +25,7 @@ class Product(Base):
     name = Column(String(100), nullable=False)
     price = Column(Integer, nullable=False)
     quantity = Column(Integer, nullable=False)
+    image = Column(String(300)) 
     farmer_id = Column(Integer, ForeignKey("farmers.id"), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

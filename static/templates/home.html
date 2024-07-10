@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}">
 	<title>Farmlink</title>
 </head>
@@ -11,6 +12,7 @@
 		<h1>Farm<span>link</span></h1>
 		<ul id="link-head">
 			<li id="head-links"><a href="#">Home</a></li>
+			<li id="head-links"><a href="#about">About</a></li>
 			<li id="head-links"><a href="{{ url_for('get_products') }}">Products</a></li>
 			<li id="head-links"><a href="{{ url_for('sign_in') }}">Sign Up</a></li>
 			<li id="head-links"><a href="{{ url_for('login') }}">Login</a></li>			
@@ -20,9 +22,43 @@
 		<div class="banner">
 			<img src="{{ url_for('static', filename='images/banner-img.jpg') }}" alt="Banner Image">
 			<h1>Connecting people to Fresh Farm products</h1>
-	
+			<h2>Organic food, Organic life</h2>
+			<button class="shop-btn">
+				<a href="{{ url_for('login') }}">Shop now</a>
+				<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+			</button>
 		</div>
+		<div id="about">
+			<h1>About Us</h1>
+			<div class="text">
+				<ul class="lable">
+					<li><i class="fa fa-leaf" aria-hidden="true"></i>
+						100% Organic
+					</li>
+					<li>Rich in Nutrients</li>
+					<li>Non GMO </li>
+				</ul>
+			</div>
+			<div id="text">
+				<p>
+					Welcome to Farmlink, your go-to platform for connecting farmers directly with consumers to
+					bring the freshest produce straight from the fields to your table. We are dedicated to 
+					revolutionizing the agricultural market by creating a seamless and efficient bridge between
+					local farmers and health-conscious consumers.
+				</p>
+				<img src="{{ url_for('static', filename='images/african-people.jpg') }}" alt="AboutUs Image">
+			</div>
+			<div class="mission">
+				<h1>Our Mission</h1>
+				<p>
+					At Farmlink, our mission is to empower farmers by providing them with a robust platform
+					to showcase and sell their products directly to consumers. We aim to support sustainable
+					agriculture, reduce food wastage, and ensure that everyone has access to fresh, high-quality
+					produce at fair prices.
+				</p>
+			</div>
+		</div>
+
 	</section>
-	
 </body>
 </html>
