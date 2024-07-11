@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -18,7 +18,7 @@ password = "kayla@2020"
 encoded_password = urllib.parse.quote_plus(password)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://farmlink_user:{encoded_password}@localhost:3306/fm_ln_0"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = '/uploads' 
+app.config['UPLOAD_FOLDER'] = '/uploads'
 db = SQLAlchemy(app)
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
