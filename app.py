@@ -35,10 +35,12 @@ def get_db_connection():
 
 @app.route('/')
 def home():
+    """route to home page"""
     return render_template('home.html')
 
 @app.route('/sign_in')
 def sign_in():
+    """function to render sign-up page"""
     return render_template('sign_in.html')
 
 @app.route('/sign_up_or_login', methods=['POST'])
@@ -62,14 +64,14 @@ def sign_up_or_login():
     elif user_type == 'farmer':
         user = db.session.query(Farmers).filter_by(name=name, contact=contact).first()
         if not user:
-            # Sign up new farmer
+            """Sign up new farmer"""
             new_farmer = Farmers(name=name, contact=contact, address=address)
             db.session.add(new_farmer)
             db.session.commit()
             return redirect(url_for('login'))
 
     if user:
-        # Successful login
+        """Successful login"""
         session['user_id'] = user.id
         session['user_type'] = user_type
         return redirect(url_for('dashboard', user_type=user_type))
