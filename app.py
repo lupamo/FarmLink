@@ -91,6 +91,7 @@ def get_products():
             'name': product.name,
             'price': product.price,
             'quantity': product.quantity,
+            'Description': product.Descrption,
             'farmer': product.farmer.name if product.farmer else '', # Access farmer's name directly from the loaded object
             'contact': product.farmer.contact if product.farmer else '' # Access farmer's contact directly from the loaded object
         }

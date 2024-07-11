@@ -19,9 +19,11 @@
 						<h3>{{ product['name'] }}</h2>
 						<p>Price: ksh:{{ product['price'] }} per kg</p>
 						<p>quantity Available:{{ product['quantity'] }} Kgs</p>
+						<p>Description:{{ product['Description'] }}</p>
 						<p>Farmer: {{ product['farmer']['name'] }}</p>
 						<p>Contact: {{ product['farmer']['contact'] }}</p>
 						<p>address: {{ product['farmer']['address'] }}</p>
+
 					</li>
 				{% else %}
 					<li>No products available</li>

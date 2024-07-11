@@ -15,11 +15,13 @@ header{
 	padding: 15px;
 	background-color: rgb(218, 226, 233);
 }
-h1{
+h1 a{
 	font-size: 40px;
 	font-weight: 500;
-		
+	color: black;
+	text-decoration: none;
 }
+
 h1 span{
 	color: rgb(10, 168, 37);
 	font-size: 40px;
